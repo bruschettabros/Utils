@@ -30,3 +30,9 @@ eg:
 ```
 artisan audio:khdownload super-mario-bros flac | sh
 ```
+
+## Tests
+To run the tests run: 
+```
+php artisan test --parallel
+```
