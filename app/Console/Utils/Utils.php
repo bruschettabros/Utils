@@ -2,11 +2,15 @@
 
 namespace App\Console\Utils;
 
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Process\ProcessResult as ProcessResultContact;
 use Illuminate\Process\ProcessResult;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
+use OpenAI;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Utils
 {
@@ -38,5 +42,15 @@ class Utils
             $command .= sprintf(' %s', $argument);
         });
         return Process::run($command);
+    }
+
+    public static function OpenAiInstance(): OpenAI\Client
+    {
+        return OpenAI::factory()
+            ->withApiKey(config('openai.api_key'))
+            ->withBaseUri(config('openai.url'))
+            ->withHttpClient($client = new Client([]))
+            ->withStreamHandler(fn ($request) => $client->send($request, ['stream' => true]))
+            ->make();
     }
 }

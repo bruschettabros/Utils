@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Console\Utils\Utils;
+use OpenAI;
+use OpenAI\Client;
 use Tests\TestCase;
 
 class UtilsTest extends TestCase
@@ -28,5 +30,10 @@ class UtilsTest extends TestCase
     {
         $this->assertEquals(base_path() . PHP_EOL, Utils::command('pwd')->output());
         $this->assertEquals('Hello World! World Hello!' . PHP_EOL, Utils::command('echo', ['Hello' => 'World!'], ['World' => 'Hello!'])->output());
+    }
+
+    public function testOpenAiInstance(): void
+    {
+        $this->assertInstanceOf(Client::class, Utils::OpenAiInstance());
     }
 }

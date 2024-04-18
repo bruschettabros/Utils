@@ -9,10 +9,12 @@
         "laravel/framework": "^11.0",
         "laravel/prompts": "^0.1.19",
         "laravel/tinker": "^2.9",
+        "openai-php/client": "^0.8.5",
         "openai-php/laravel": "^0.8.1",
         "zenthangplus/html-dom-parser": "^1.0"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "brianium/paratest": "^7.4",
         "fakerphp/faker": "^1.23",
         "friendsofphp/php-cs-fixer": "^3.54",
