@@ -19,7 +19,7 @@ class khdownloadCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle() : void
+    public function handle(): void
     {
         $albumName = $this->argument('album');
         $url = $this->url . $this->uri . $albumName;

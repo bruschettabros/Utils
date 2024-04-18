@@ -13,7 +13,7 @@ class mergeCommand extends Command
 
     protected $description = 'Merge audio files together using FFMPEG.';
 
-    public function handle() : ?int
+    public function handle(): ?int
     {
         if (!Utils::commandExists('ffmpeg')) {
             $this->error('FFMPEG is not installed.');

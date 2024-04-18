@@ -11,7 +11,7 @@ class BookDownloadCommand extends Command
 
     protected $description = 'Downloads an Audiobook from a provided JSON file.';
 
-    public function handle() : void
+    public function handle(): void
     {
         collect(File::json($this->argument('jsonFile'))['playlist'])
             ->each(fn ($chapter) => $this->info($this->wgetCommand($chapter)));
@@ -20,10 +20,10 @@ class BookDownloadCommand extends Command
     private function wgetCommand($chapter): string
     {
         return sprintf(
-           'wget "%s" -O %s-%s.mp3',
-           $chapter["url"],
-           $this->argument('name'),
-           $chapter["chapter_number"]
+            'wget "%s" -O %s-%s.mp3',
+            $chapter["url"],
+            $this->argument('name'),
+            $chapter["chapter_number"]
         );
     }
 }
