@@ -12,7 +12,7 @@ use function Laravel\Prompts\spin;
 
 class InteractCommand extends Command
 {
-    protected $signature = 'ai:interact';
+    protected $signature = 'ai:interact {temperature=1 : The temperature of the model, can be between 0 and 1} {--systemMessage= : Include system messages}';
 
     protected $description = 'Interact with Open API';
 
@@ -30,11 +30,16 @@ class InteractCommand extends Command
 
     public function handle(): void
     {
+        if (!empty($this->option('systemMessage'))) {
+            $this->messages[] = ['role' => 'system', 'content' => $this->option('systemMessage')];
+        }
+
         while ($text = text(label: 'Ask Assistant')) {
-            spin(fn () => $this->info($this->chat($text)), 'Thinking...');
+            $answer = spin(fn () => $this->chat($text), 'Thinking...');
+            $this->info($answer);
         }
         if ($this->confirm('Dump this conversation?')) {
-            $this->info(json_encode($this->messages, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT));
+            $this->info(json_encode($this->messages, JSON_PRETTY_PRINT));
         }
         if ($this->confirm('Convert conversation to audio?')) {
             spin(fn () => $this->convertToAudio(), 'Converting to Audio...');
@@ -48,8 +53,11 @@ class InteractCommand extends Command
         $result = $this->client->chat()->create([
             'model' => self::MODEL,
             'messages' => $this->messages,
+            'temperature' => $this->argument('temperature'),
         ]);
-        $this->messages[] = ['role' => 'assistant', 'content' => $result->choices[0]->message->content];
+
+        $this->messages[] = $result->choices[0]->message->toArray();
+        $this->info(json_encode(end($this->messages)['content'], JSON_PRETTY_PRINT));
         return end($this->messages)['content'];
 
     }

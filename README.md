@@ -1,4 +1,5 @@
 ## Installation
+
 To install the package run:
 ```
 ./install.sh
@@ -7,17 +8,23 @@ To install the package run:
 ## Commands
 
 ### AI
+
 You can use a local instant of an assistant with https://lmstudio.ai/
 Changing the `OPENAI_URL` in the `.env` file will change the endpoint the AI commands use.
 
 ```shell
-artisan ai:interact
+artisan ai:interact temperature=1 --systemMessage=
 ```
 
 Will start an interactive session with the AI.
+ - temperature: The randomness of the AI's responses, value can be between 0 and 1
+ - systemMessage: The message to instruct the assistant with
+
 Once the chat has finished you can dump to `json` and convert to audio using `tts`
----
+
 ### Audio
+
+```shell
 ```shell
 artisan audio:book-download {jsonFile} {name}
 ```
@@ -61,6 +68,7 @@ artisan audio:khdownload super-mario-bros flac | sh
 ```
 ---
 ## Tests
+
 To run the tests run: 
 ```shell
 php artisan test --parallel
