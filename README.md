@@ -22,6 +22,14 @@ Will start an interactive session with the AI.
 
 Once the chat has finished you can dump to `json` and convert to audio using `tts`
 
+```shell
+artisan ai:commit-message directory temperature=1
+```
+
+ Will generate a commit message based on the git diff of a directory
+ - directory: The directory to generate the commit message for (Can be relative or absolute)
+ - temperature: The randomness of the AI's responses, value can be between 0 and 1
+
 ### Audio
 
 ```shell
