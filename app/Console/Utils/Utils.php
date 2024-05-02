@@ -5,12 +5,9 @@ namespace App\Console\Utils;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Process\ProcessResult as ProcessResultContact;
 use Illuminate\Process\ProcessResult;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
 use OpenAI;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class Utils
 {
@@ -30,6 +27,7 @@ class Utils
     public static function command(string $command, ...$arguments): ProcessResult|ProcessResultContact
     {
         collect($arguments)->each(function ($argument) use (&$command) {
+            // Should allow for key value arguments eg ['--text' => 'Hello', '--voice' => 'en-GB-SoniaNeural']
             if (is_array($argument)) {
                 $string = Str::of('');
 

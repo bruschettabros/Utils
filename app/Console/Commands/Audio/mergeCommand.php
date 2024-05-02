@@ -20,12 +20,12 @@ class mergeCommand extends Command
             return 1;
         }
 
-        $result = Process::run(sprintf(
-            "ffmpeg -i 'concat:%s' -acodec copy %s",
-            $this->generateList(),
-            $this->argument('output')
-        ));
-        return $result->exitCode();
+        return Utils::command('ffmpeg', [
+            '-i',
+            'concat:' => $this->generateList(),
+            '-acodec',
+            'copy ' => $this->argument('output'),
+        ])->exitCode();
     }
 
     private function generateList(): string

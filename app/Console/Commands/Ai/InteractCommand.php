@@ -47,7 +47,7 @@ class InteractCommand extends Command
 
     }
 
-    private function chat(string $message): string
+    protected function chat(string $message): string
     {
         $this->messages[] = ['role' => 'user', 'content' => $message];
         $result = $this->client->chat()->create([
