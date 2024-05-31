@@ -13,26 +13,29 @@ class mergeCommand extends Command
 
     protected $description = 'Merge audio files together using FFMPEG.';
 
-    public function handle(): ?int
+    public function handle()
     {
         if (!Utils::commandExists('ffmpeg')) {
             $this->error('FFMPEG is not installed.');
             return 1;
         }
-
-        return Utils::command('ffmpeg', [
-            '-i',
-            'concat:' => $this->generateList(),
-            '-acodec',
-            'copy ' => $this->argument('output'),
-        ])->exitCode();
+        $result = Process::run(sprintf(
+            "ffmpeg -i 'concat:%s' -acodec copy %s",
+            $this->generateList(),
+            $this->argument('output')
+        ));
+        return $result->exitCode();
     }
 
-    private function generateList(): string
+    public function generateList(): string
     {
-        return collect(File::allFiles($this->argument('directory')))
-            ->map(fn ($file) => $file->getRealPath())
-            ->sort(fn ($a, $b) => Utils::getChapterFromFileName($a) <=> Utils::getChapterFromFileName($b))
-            ->implode('|');
+        $files = [];
+
+        foreach (File::allFiles($this->argument('directory')) as $file) {
+            preg_match('/\d+(?=.)/', $file->getFilename(), $matches);
+            $files[$matches[0]] = $file->getRealPath();
+        }
+        ksort($files);
+        return implode('|',$files);
     }
 }

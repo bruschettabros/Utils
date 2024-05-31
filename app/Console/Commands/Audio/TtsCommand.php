@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 class TtsCommand extends Command
 {
     protected const COMMAND = '.venv/bin/edge-tts';
-    protected $signature = 'audio:tts {input} {output} {--voice=en-GB-SoniaNeural : The voice to use}';
+    protected $signature = 'audio:tts {input} {output} {--voice=en-GB-SoniaNeural : The voice to use} {--play=false}';
 
     protected $description = 'Provides a text-to-speech service.';
 
@@ -44,6 +44,7 @@ class TtsCommand extends Command
         if (file_exists($argument)) {
             $argument = file_get_contents($argument);
         }
+        $argument = str_replace('\\', '', $argument);
 
         return sprintf('"%s"', addslashes($argument));
     }

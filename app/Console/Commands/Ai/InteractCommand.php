@@ -57,7 +57,7 @@ class InteractCommand extends Command
         ]);
 
         $this->messages[] = $result->choices[0]->message->toArray();
-        $this->info(json_encode(end($this->messages)['content'], JSON_PRETTY_PRINT));
+//        $this->info(json_encode(end($this->messages)['content'], JSON_PRETTY_PRINT));
         return end($this->messages)['content'];
 
     }

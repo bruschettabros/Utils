@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Ai;
 
 use App\Console\Utils\Utils;
-
 use function Laravel\Prompts\spin;
 
 class CommitMessageCommand extends InteractCommand
@@ -14,10 +13,10 @@ class CommitMessageCommand extends InteractCommand
 
     public function handle(): void
     {
-        $this->messages[] = ['role' => 'system', 'content' => 'You are in the process of creating a git commit message'];
+        $this->messages[] = ['role' => 'system', 'content' => 'You write git commit messages'];
 
         $output = spin(fn () => $this->chat(sprintf(
-            'Write a commit message based on this diff: ```diff %s```',
+            'Give me a git commit message based on this git diff: ```%s```',
             Utils::command('git', '-C', $this->argument('directory'), 'diff')->output()
         )), 'Thinking...');
 
