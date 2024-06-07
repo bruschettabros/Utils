@@ -8,5 +8,6 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
 
+brew install ffmpeg
 # Local AI related
-brew install --cask lm-studio
+# brew install --cask lm-studio

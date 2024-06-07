@@ -45,6 +45,7 @@ class TtsCommand extends Command
             $argument = file_get_contents($argument);
         }
         $argument = str_replace('\\', '', $argument);
+        $argument = str_replace('\'', '', $argument);
 
         return sprintf('"%s"', addslashes($argument));
     }

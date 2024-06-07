@@ -33,7 +33,6 @@ artisan ai:commit-message directory temperature=1
 ### Audio
 
 ```shell
-```shell
 artisan audio:book-download {jsonFile} {name}
 ```
 Downloads an audiobook from a json file
@@ -66,6 +65,13 @@ Converts text to speech
  - input: The text to convert. Can be a file or a string
  - output: The output file
  - voice: The voice to use (Defaults to en-GB-SoniaNeural)
+
+```shell
+audio:tts-conversation {input} {output}
+```
+Will generate a conversation based on a text file. Use double new lines to switch between voice 
+ - Currently the voices are hardcoded.
+
 ----
 Download based commands will provide the output as a series of `wget` commands.
 To run them inline pipe the output to `bash` or save them to a file and run it.
